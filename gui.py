@@ -3,11 +3,11 @@ from tkinter import filedialog as fd
 
 import customtkinter as ctk
 
-from backup_creator import file_copier
-from helpers import get_drive_letters
+from helpers import get_drive_letters, file_copier
 
 
 class App(ctk.CTk):
+    """Creates a customtkinter GUI class."""
     def __init__(self):
         super().__init__()
 
@@ -74,11 +74,13 @@ class App(ctk.CTk):
         self.log_textbox.grid(row=1, column=0, padx=10, pady=5, sticky='nsew')
 
     def browse_callback(self):
+        """Defines Browse button behaviour."""
         files = fd.askopenfilename()
         self.files_entry.delete(0, "end")
         self.files_entry.insert(0, files)
 
     def preview_callback(self):
+        """Defines Preview button behaviour."""
         self.log_textbox.delete("0.0", "end")
         if self.files_entry.get() != "":
             log = file_copier(self.destination_letter_optionbox.get() + ":", str(self.files_entry.get()), False, self.options_switch.get(), self.options_entry.get())
@@ -86,6 +88,7 @@ class App(ctk.CTk):
                 self.log_textbox.insert("end", entry)
 
     def backup_callback(self):
+        """Defines Backup button behaviour."""
         self.log_textbox.delete("0.0", "end")
         if self.files_entry.get() != "":
             log = file_copier(self.destination_letter_optionbox.get() + ":", str(self.files_entry.get()), True, self.options_switch.get(), self.options_entry.get())
@@ -93,18 +96,7 @@ class App(ctk.CTk):
                 self.log_textbox.insert("end", entry)
 
 
-    # This function can get temp path for your resource file
-    # relative_path is your icon file name
-    def resource_path(self, relative_path):
-    #""" Get absolute path to resource, works for dev and for PyInstaller """
-        try:
-            # PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except Exception:
-            base_path = os.path.abspath(".")
-        return os.path.join(base_path, relative_path)
-    
 if __name__ == "__main__":
-    app = Gui()
+    app = App()
     app.mainloop()
-
+    
