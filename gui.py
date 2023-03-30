@@ -1,10 +1,13 @@
-from tkinter import filedialog as fd
-import customtkinter as ctk
-from backup_creator import file_copier
-from win_drive_letters import get_drive_letters
 import os
+from tkinter import filedialog as fd
 
-class Gui(ctk.CTk):
+import customtkinter as ctk
+
+from backup_creator import file_copier
+from helpers import get_drive_letters
+
+
+class App(ctk.CTk):
     def __init__(self):
         super().__init__()
 
@@ -22,7 +25,7 @@ class Gui(ctk.CTk):
 
         self.font = ctk.CTkFont("Inter",size=12,weight="bold")
         self.icon = "dk.ico"
-        self.iconPath = self.resource_path('dk.ico')
+        self.iconPath = self.resource_path(f'{os.path.dirname(__file__)}/icons/dk.ico')
         self.iconbitmap(self.iconPath)
 
         self.destination_frame = ctk.CTkFrame(master=self)
