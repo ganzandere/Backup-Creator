@@ -1,5 +1,6 @@
 import os
 from tkinter import filedialog as fd
+from tkinter.messagebox import askyesno
 
 import customtkinter as ctk
 
@@ -89,10 +90,12 @@ class App(ctk.CTk):
         """Defines Backup button behaviour."""
         self.log_textbox.delete("0.0", "end")
         if self.files_entry.get() != "":
-            self.log_textbox.insert("0.0", "Copying:\n")
-            log = file_copier(str(self.files_entry.get()), f"{self.destination_letter_optionbox.get()}:", self.options_switch.get(), self.options_entry.get(), True)
-            for entry in log:
-                self.log_textbox.insert("end", entry)
+            if askyesno(title = "Confirmation", message="Are you sure that you want to backup?"):
+                self.log_textbox.insert("0.0", "Copying:\n")
+                log = file_copier(str(self.files_entry.get()), f"{self.destination_letter_optionbox.get()}:", self.options_switch.get(), self.options_entry.get(), True)
+                for entry in log:
+                    self.log_textbox.insert("end", entry)
+                self.log_textbox.insert("end", "Finished Copying.")
 
 
 if __name__ == "__main__":
