@@ -23,7 +23,7 @@ class App(ctk.CTk):
         self.grid_columnconfigure(0, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
-        self.font = ctk.CTkFont("Inter",size=12,weight="bold")
+        self.font = ctk.CTkFont(c.WIN_FONT[0], c.WIN_FONT[1], c.WIN_FONT[2])
         self.icon_path = f'{os.path.dirname(__file__)}/icons/dk.ico'
         self.iconbitmap(self.icon_path)
 
@@ -80,7 +80,8 @@ class App(ctk.CTk):
         """Defines Preview button behaviour."""
         self.log_textbox.delete("0.0", "end")
         if self.files_entry.get() != "":
-            log = file_copier(self.destination_letter_optionbox.get() + ":", str(self.files_entry.get()), False, self.options_switch.get(), self.options_entry.get())
+            self.log_textbox.insert("0.0", "Preview:\n")
+            log = file_copier(str(self.files_entry.get()), f"{self.destination_letter_optionbox.get()}:", self.options_switch.get(), self.options_entry.get(), False)
             for entry in log:
                 self.log_textbox.insert("end", entry)
 
@@ -88,7 +89,8 @@ class App(ctk.CTk):
         """Defines Backup button behaviour."""
         self.log_textbox.delete("0.0", "end")
         if self.files_entry.get() != "":
-            log = file_copier(self.destination_letter_optionbox.get() + ":", str(self.files_entry.get()), True, self.options_switch.get(), self.options_entry.get())
+            self.log_textbox.insert("0.0", "Copying:\n")
+            log = file_copier(str(self.files_entry.get()), f"{self.destination_letter_optionbox.get()}:", self.options_switch.get(), self.options_entry.get(), True)
             for entry in log:
                 self.log_textbox.insert("end", entry)
 

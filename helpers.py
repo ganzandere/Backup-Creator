@@ -12,29 +12,27 @@ def get_drive_letters():
     return [drive_letter.rstrip(':\\') for drive_letter in drives]
 
 
-
-def file_copier(destination, file, mode, insert, insertext):
-    """Copies the files"""
+def file_copier(file, destination, doprefix, prefix, mode):
+    """Parses the .txt file, modifies the path with destination argument. If doprefix is True, prefix added after the drive letter. 
+    Previews the move if mode is False and actually copies the files if mode is True."""
     root = os.path.dirname(file)
     file = os.path.join(root, file)
     log = []
 
-    if insert:
-        if insertext != "":
-            destination = destination + "\\" + insertext
+    if doprefix:
+        if prefix != "":
+            destination = f"{destination}\\{prefix}\\"
 
     with open(file) as f:
         for line in f:
-            oldline = os.path.abspath(line).replace('\n','')            
-            #newline = os.path.join(destination, oldline.split(':')[1])
-            newline = destination + oldline.split(":")[1]
-
+            oldfile = os.path.abspath(line).replace('\n', '')
+            newfile = f"{destination}{oldfile.split(':')[1]}"
+            newfile = os.path.normpath(newfile)
             if mode:
-                log.append('copying: \n' + oldline + "\n" + newline + "\n")
-                # if not os.path.isdir(os.path.dirname(newline)):
-                #     os.makedirs(os.path.dirname(newline))
-                # shutil.copy2(oldline, newline)
+                log.append(f"{oldfile}\n{newfile}\n\n")
+                if not os.path.isdir(os.path.dirname(newfile)):
+                    os.makedirs(os.path.dirname(newfile))
+                shutil.copy2(oldfile, newfile)
             else:
-                log.append('preview: \n' + oldline + "\n" + newline + "\n")
-            #print ('copying: ', oldline)
+                log.append(f"{oldfile}\n{newfile}\n\n")
     return log
