@@ -57,9 +57,9 @@ class App(ctk.CTk):
         self.options = ctk.CTkFrame(master=self)
         self.options.grid(row=4, column=0, padx=10, pady=5, sticky='nsew')
 
-        self.options_entry = ctk.CTkEntry(master=self.options, width=500, font=self.font, placeholder_text="Additional path argument after the destination drive letter.")
+        self.options_entry = ctk.CTkEntry(master=self.options, width=500, font=self.font, placeholder_text="Destination prefix.")
         self.options_entry.grid(row=0, column=0, padx=10, pady=10, sticky='nsew')
-        self.options_switch = ctk.CTkSwitch(master=self.options, text='Insert Path', offvalue=False, onvalue=True, switch_width=50)
+        self.options_switch = ctk.CTkSwitch(master=self.options, text='Insert Prefix', offvalue=False, onvalue=True, switch_width=50)
         self.options_switch.grid(row=0, column=1, padx=10, pady=10, sticky='e')
 
         self.log_frame = ctk.CTkFrame(master=self)

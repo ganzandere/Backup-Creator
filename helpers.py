@@ -1,7 +1,6 @@
 """Defines helper functions for the application."""
 import os
 import shutil
-import string
 
 import win32api
 
